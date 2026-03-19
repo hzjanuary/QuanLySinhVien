@@ -89,6 +89,7 @@ thoại" required>
                     <th>Họ và Tên</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
+                    <th>Hành động</th>
                 </tr>
             </thead>
             <tbody>
@@ -101,7 +102,11 @@ thoại" required>
                             htmlspecialchars($student['email']); ?></td>
                         <td><?php echo
                             htmlspecialchars($student['phone']); ?></td>
+                        <td>
+                            <a href="index.php?action=edit&id=<?php echo
 
+                                $student['id']; ?>">Sửa</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
                 <?php if (empty($students)): ?>
