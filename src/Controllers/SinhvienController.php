@@ -15,7 +15,7 @@ class SinhvienController
         $keyword = $_GET['keyword'] ?? null;
         $students = $this->sinhvienModel->getAllStudents($keyword);
         // Nạp file view để hiển thị
-        require_once __DIR__ . '/../../views/sinhvien_list.php';
+        require_once __DIR__ . '/../Views/sinhvien_list.php';
     }
     // Xử lý thêm sinh viên
     public function add()
@@ -54,7 +54,7 @@ class SinhvienController
         // Gọi model để lấy thông tin sinh viên
         $student = $this->sinhvienModel->getStudentById($id);
         // Nạp file view để hiển thị form
-        require_once __DIR__ . '/../../views/sinhvien_edit.php';
+        require_once __DIR__ . '/../Views/sinhvien_edit.php';
     }
     // PHƯƠNG THỨC MỚI: Xử lý cập nhật dữ liệu (bài 03)
     public function update()
