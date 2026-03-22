@@ -12,9 +12,24 @@ class SinhvienController
     // Hiển thị danh sách sinh viên
     public function index()
     {
+        // --- CÀI ĐẶT CÁC BIẾN PHÂN TRANG ---
+        $recordsPerPage = 5; // Số sinh viên mỗi trang
+        $currentPage = isset($_GET['page']) ?
+            (int) $_GET['page'] : 1;
+        if ($currentPage < 1) {
+            $currentPage = 1;
+        }
+        $offset = ($currentPage - 1) * $recordsPerPage;
         $keyword = $_GET['keyword'] ?? null;
-        $students = $this->sinhvienModel->getAllStudents($keyword);
-        // Nạp file view để hiển thị
+        // --- GỌI MODEL ---
+        $result = $this->sinhvienModel->getStudents(
+            $keyword,
+            $recordsPerPage,
+            $offset
+        );
+        $students = $result['data'];
+        $totalRecords = $result['total'];
+        $totalPages = ceil($totalRecords / $recordsPerPage);
         require_once __DIR__ . '/../Views/sinhvien_list.php';
     }
     // Xử lý thêm sinh viên

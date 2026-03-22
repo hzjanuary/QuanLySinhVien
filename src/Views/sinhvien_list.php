@@ -58,6 +58,32 @@ initial-scale=1.0">
         th {
             background-color: #f2f2f2;
         }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination a {
+            padding: 8px 12px;
+            margin: 0 4px;
+            background-color: #f2f2f2;
+            color: #333;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .pagination a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pagination a.active {
+            background-color: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
     </style>
 </head>
 
@@ -66,19 +92,21 @@ initial-scale=1.0">
         <h1>Quản lý sinh viên</h1>
         <form action="index.php" method="GET" style="margin-bottom: 20px;">
             <h3>
-            <?php
-            if (isset($keyword) && !empty($keyword)) {
-                echo "Kết quả tìm kiếm cho: '" .htmlspecialchars($keyword) . "'";
+                <?php
+                if (isset($keyword) && !empty($keyword)) {
+                    echo "Kết quả tìm kiếm cho: '" . htmlspecialchars($keyword) . "'";
 
-            } else {
-                // Nếu không thì hiển thị tiêu đề mặc định
-                echo "Danh sách sinh viên";
-            }
-            ?>
-        </h3>
-            <input type="text" name="keyword" placeholder="Tìm kiếm theo tên..." value="<?php echo htmlspecialchars($keyword ??''); ?>">
-
+                } else {
+                    // Nếu không thì hiển thị tiêu đề mặc định
+                    echo "Danh sách sinh viên";
+                }
+                ?>
+            </h3>
+            <input type="text" name="keyword" placeholder="Tìm theo tên, email, sđt..."
+                value="<?php echo htmlspecialchars($keyword ?? ''); ?>">
             <button type="submit">Tìm kiếm</button>
+            <a href="index.php"
+                style="padding: 8px 12px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 3px;">Reset</a>
         </form>
         <form action="index.php?action=add" method="POST">
             <h3>Thêm sinh viên mới</h3>
@@ -140,6 +168,13 @@ thoại" required>
                 <?php endif; ?>
             </tbody>
         </table>
+        <div class="pagination">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="?keyword=<?php echo urlencode($keyword ?? ''); ?>&page=<?php echo $i; ?>" class="<?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                    <?php echo $i; ?>
+                </a>
+            <?php endfor; ?>
+        </div>
     </div>
 </body>
 
