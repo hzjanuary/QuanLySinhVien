@@ -64,6 +64,23 @@ initial-scale=1.0">
 <body>
     <div class="container">
         <h1>Quản lý sinh viên</h1>
+        <h2>
+            <?php
+            if (isset($keyword) && !empty($keyword)) {
+                echo "Kết quả tìm kiếm cho: '" .htmlspecialchars($keyword) . "'";
+
+            } else {
+                // Nếu không thì hiển thị tiêu đề mặc định
+                echo "Danh sách sinh viên";
+            }
+            ?>
+        </h2>
+        <form action="index.php" method="GET" style="margin-bottom: 20px;">
+
+            <input type="text" name="keyword" placeholder="Tìm kiếm theo tên..." value="<?php echo htmlspecialchars($keyword ??''); ?>">
+
+            <button type="submit">Tìm kiếm</button>
+        </form>
         <form action="index.php?action=add" method="POST">
             <h3>Thêm sinh viên mới</h3>
             <input type="text" name="name" placeholder="Họ và
@@ -107,8 +124,8 @@ thoại" required>
 
                                 $student['id']; ?>">Sửa</a>
                             |
-                            <a href="index.php?action=delete&id=<?php echo $student['id']; ?>" 
-                            onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này ra khỏi danh sách lớp K17 không?');">
+                            <a href="index.php?action=delete&id=<?php echo $student['id']; ?>"
+                                onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này ra khỏi danh sách lớp K17 không?');">
                                 Xóa
                             </a>
                         </td>

@@ -11,11 +11,24 @@ class SinhvienModel
         $this->conn = Database::getInstance()->getConnection();
     }
     // Lấy tất cả sinh viên
-    public function getAllStudents()
+// Nâng cấp hàm getAllStudents để có thể tìm kiếm
+    public function getAllStudents($keyword = null)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM students
+        // Bắt đầu câu lệnh SQL
+        $sql = "SELECT * FROM students";
+        // Nếu có từ khóa tìm kiếm, thêm điều kiện WHERE
+        if ($keyword) {
+            // Sử dụng LIKE để tìm kiếm gần đúng
+            $sql .= " WHERE name LIKE :keyword";
+        }
+        $sql .= " ORDER BY id DESC";
+        $stmt = $this->conn->prepare($sql);
+        // Nếu có từ khóa, gán giá trị cho tham số :keyword
+        if ($keyword) {
 
-ORDER BY id DESC");
+            $searchKeyword = "%{$keyword}%";
+            $stmt->bindParam(':keyword', $searchKeyword);
+        }
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
