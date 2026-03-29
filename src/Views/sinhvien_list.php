@@ -1,3 +1,4 @@
+<?php use Hzjan\Bai01QuanlySv\Core\FlashMessage; ?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -84,11 +85,32 @@ initial-scale=1.0">
             color: white;
             border-color: #28a745;
         }
+
+        /* views/sinhvien_list.php -> bên trong thẻ <style> */
+        .flash-message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+            /* Hiệu ứng mờ dần */
+        }
+
+        .flash-success {
+            background-color: #28a745;
+        }
+
+        .flash-error {
+            background-color: #dc3545;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
+        <?php FlashMessage::display(); ?>
         <div style="text-align: right; margin-bottom: 15px;">
             Chào mừng, <strong>
                 <?php echo
@@ -188,6 +210,23 @@ thoại" required>
                 <?php endfor; ?>
             </div>
         </div>
+        <script>
+            // Lấy tất cả các phần tử flash message
+            const flashMessages = document.querySelectorAll('.flash-message');
+            // Nếu có thông báo, đặt một bộ đếm thời gian để ẩn nó sau 5 giây
+            if (flashMessages.length > 0) {
+                setTimeout(() => {
+                    flashMessages.forEach(function (message) {
+                        // Làm cho thông báo mờ dần trước khi xóa
+                        message.style.opacity = '0';
+                        // Xóa hẳn phần tử khỏi DOM sau khi hiệu ứng mờ kết thúc
+                        setTimeout(() => {
+                            message.style.display = 'none';
+                        }, 500); // 0.5 giây, khớp với transition của CSS
+                    });
+                }, 5000); // 5000 milliseconds = 5 giây
+            }
+        </script>
 </body>
 
 </html>

@@ -2,6 +2,8 @@
 // src/Controllers/SinhvienController.php
 namespace Hzjan\Bai01QuanlySv\Controllers;
 use Hzjan\Bai01QuanlySv\Models\SinhvienModel;
+use Hzjan\Bai01QuanlySv\Core\FlashMessage;
+
 class SinhvienController
 {
     private $sinhvienModel;
@@ -48,9 +50,11 @@ class SinhvienController
                 $this->sinhvienModel->addStudent(
                     $name,
                     $email,
-
                     $phone
                 );
+                FlashMessage::set('student_action', 'Thêm sinh viên thành công!', 'success');
+            } else {
+                FlashMessage::set('student_action', 'Thêm sinh viên thất bại!', 'error');
             }
         }
         // Sau khi thêm, chuyển hướng về trang danh sách
@@ -88,10 +92,12 @@ class SinhvienController
                 $this->sinhvienModel->updateStudent(
                     $id,
                     $name,
-
                     $email,
                     $phone
                 );
+                FlashMessage::set('student_action', 'Cập nhật thông tin thành công!', 'success');
+            } else {
+                FlashMessage::set('student_action', 'Cập nhật thất bại!', 'error');
             }
         }
         // Sau khi cập nhật, chuyển hướng về trang danh sách
@@ -101,13 +107,16 @@ class SinhvienController
     public function delete()
     {
         $id = $_GET['id'] ?? null;
-        if (!$id) {
-            // Nếu không có id, không làm gì cả và quay về trang chủ
-            header('Location: index.php');
-            exit();
+        if ($id) {
+            if ($this->sinhvienModel->deleteStudent($id)) {
+                FlashMessage::set('student_action', 'Xóa sinh viên thành công!', 'success');
+
+            } else {
+                FlashMessage::set('student_action', 'Xóa thất bại!', 'error');
+            }
         }
         // Gọi model để thực hiện xóa
-        $this->sinhvienModel->deleteStudent($id);
+        // Sau khi xóa, chuyển hướng người dùng về lại trang danh sách
         header('Location: index.php');
         exit();
     }
