@@ -101,13 +101,10 @@
             <div class="stat-card orange">
                 <div class="number"><?php echo
                     htmlspecialchars($stats['sdt_09'] ?? 0); ?></div>
-
                 <div class="title">SV có SĐT đầu 09</div>
             </div>
         </div>
-        <a href="index.php" class="back-link">Quay về danh
-
-            sách</a>
+        <a href="index.php" class="back-link">Quay về danh sách</a>
     </div>
 </body>
 
