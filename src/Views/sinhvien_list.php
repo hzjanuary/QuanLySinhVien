@@ -139,7 +139,12 @@ initial-scale=1.0">
                     value="<?php echo htmlspecialchars($keyword ?? ''); ?>">
                 <button type="submit">Tìm kiếm</button>
                 <a href="index.php"
-                    style="padding: 8px 12px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 3px;">Reset</a>
+                    style="padding: 8px 12px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 3px;">Reset
+                </a>
+                <a href="index.php?action=dashboard"
+                    style="padding: 8px 12px; background-color: #17a2b8; color: white; text-decoration: none; border-radius: 3px;">Xem
+                    Thống kê
+                </a>
             </form>
             <form action="index.php?action=add" method="POST" enctype="multipart/form-data">
                 <h3>Thêm sinh viên mới</h3>
