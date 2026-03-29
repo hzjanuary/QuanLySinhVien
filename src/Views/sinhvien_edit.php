@@ -52,13 +52,20 @@ initial-scale=1.0">
 <body>
     <div class="container">
         <h1>Chỉnh sửa thông tin sinh viên</h1>
-        <form action="index.php?action=update" method="POST">
-            <input type="hidden" name="id" value="<?php echo
-
-                $student['id']; ?>">
+        <div>
+            <p>Ảnh đại diện hiện tại:</p>
+            <img src="../uploads/avatars/<?php echo $student['avatar'] ?? 'default-avatar.jpg'; ?>" alt="Current Avatar"
+                width="100" height="100">
+        </div>
+        <form action="index.php?action=update" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $student['id']; ?>">
+            <input type="hidden" name="old_avatar" value="<?php echo $student['avatar'] ?? ''; ?>">
 
             <label for="name">Họ và Tên:</label>
             <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($student['name']); ?>" required>
+
+            <label for="avatar">Thay đổi ảnh đại diện:</label>
+            <input type="file" id="avatar" name="avatar">
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($student['email']); ?>"

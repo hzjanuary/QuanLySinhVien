@@ -57,12 +57,11 @@ class SinhvienModel
         ];
     }
     // Thêm sinh viên mới
-    public function addStudent($name, $email, $phone)
+    public function addStudent($name, $email, $phone, $avatar)
     {
-        $stmt = $this->conn->prepare("INSERT INTO students (name,
-
-email, phone) VALUES (:name, :email, :phone)");
-
+        $stmt = $this->conn->prepare(
+            "INSERT INTO students (name, email, phone, avatar) VALUES (:name, :email, :phone, :avatar)"
+        );
         // Làm sạch dữ liệu
         $name = htmlspecialchars(strip_tags($name));
         $email = htmlspecialchars(strip_tags($email));
@@ -71,6 +70,7 @@ email, phone) VALUES (:name, :email, :phone)");
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':avatar', $avatar);
         if ($stmt->execute()) {
             return true;
         }
@@ -88,13 +88,10 @@ WHERE id = :id");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     // HÀM THÊM MỚI: Cập nhật thông tin sinh viên (bài 03)
-    public function updateStudent($id, $name, $email, $phone)
+    public function updateStudent($id, $name, $email, $phone, $avatar)
     {
         $stmt = $this->conn->prepare(
-            "UPDATE students SET name = :name, email = :email,
-
-phone = :phone WHERE id = :id"
-
+            "UPDATE students SET name = :name, email = :email, phone = :phone, avatar = :avatar WHERE id = :id"
         );
         // Làm sạch dữ liệu
         $name = htmlspecialchars(strip_tags($name));
@@ -105,6 +102,7 @@ phone = :phone WHERE id = :id"
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':avatar', $avatar);
         if ($stmt->execute()) {
             return true;
         }

@@ -1,4 +1,4 @@
-[local](http://localhost/bai01_quanly_sv/public/index.php)
+[local](http://localhost/QuanLySinhVien/public/index.php)
 
 bật apache + mysql
 
