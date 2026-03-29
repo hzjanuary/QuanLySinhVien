@@ -28,34 +28,34 @@ class SinhvienController
             $errorMsg = $uploadErrors[$file['error']] ?? 'Lỗi upload không xác định.';
             return ['error' => $errorMsg];
         }
-        
+
         $targetDir = PROJECT_ROOT . "/uploads/avatars/";
-        
+
         // Kiểm tra và tạo thư mục nếu chưa tồn tại
         if (!is_dir($targetDir)) {
             if (!@mkdir($targetDir, 0755, true)) {
                 return ['error' => 'Không thể tạo thư mục upload. Kiểm tra quyền hạn của thư mục uploads.'];
             }
         }
-        
+
         // Kiểm tra thư mục có writable không
         if (!is_writable($targetDir)) {
             return ['error' => 'Thư mục upload không có quyền ghi. Kiểm tra permissions của ' . $targetDir];
         }
-        
+
         // Kiểm tra kích thước file
         $maxFileSize = 5 * 1024 * 1024; // 5MB
         if ($file['size'] > $maxFileSize) {
             return ['error' => 'File quá lớn. Kích thước tối đa: 5MB.'];
         }
-        
+
         // Tạo tên file
         $fileName = uniqid() . '-' . basename($file["name"]);
         $targetFile = $targetDir . $fileName;
-        
+
         // Lấy loại file
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-        
+
         // Kiểm tra định dạng file
         $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
         if (!in_array($imageFileType, $allowedTypes)) {
@@ -63,7 +63,7 @@ class SinhvienController
                 'error' => 'Chỉ cho phép upload file ảnh (JPG, JPEG, PNG, GIF).'
             ];
         }
-        
+
         // Kiểm tra MIME type để bảo mật hơn
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($finfo, $file["tmp_name"]);
@@ -72,7 +72,7 @@ class SinhvienController
         if (!in_array($mimeType, $allowedMimes)) {
             return ['error' => 'File không phải là ảnh hợp lệ.'];
         }
-        
+
         // Di chuyển file
         if (@move_uploaded_file($file["tmp_name"], $targetFile)) {
             // Đặt quyền file
@@ -241,5 +241,15 @@ class SinhvienController
         // Sau khi xóa, chuyển hướng người dùng về lại trang danh sách
         header('Location: index.php');
         exit();
+    }
+    /**
+     * Hiển thị trang dashboard thống kê
+     */
+    public function dashboard()
+    {
+        // Gọi model để lấy dữ liệu thống kê
+        $stats = $this->sinhvienModel->getStatistics();
+        // Nạp file view và truyền biến $stats ra
+        require_once PROJECT_ROOT . '/src/views/dashboard.php';
     }
 }

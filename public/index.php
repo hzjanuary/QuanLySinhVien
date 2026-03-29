@@ -11,14 +11,30 @@ use Hzjan\Bai01QuanlySv\Controllers\UserController;
 // Simple Router
 $action = $_GET['action'] ?? 'index';
 // Danh sách các action không yêu cầu đăng nhập
-$public_actions = [
-    'login',
-    'register',
-    'do_login',
-    'do_register'
+// $public_actions = [
+//     'login',
+//     'register',
+//     'do_login',
+//     'do_register'
+// ];
+// if (
+//     !in_array($action, $public_actions) &&
+//     !isset($_SESSION['user_id'])
+// ) {
+//     header('Location: index.php?action=login');
+//     exit();
+// }
+
+$protected_actions = [
+    'index',
+    'edit',
+    'update',
+    'delete',
+    'add',
+    'dashboard'
 ];
 if (
-    !in_array($action, $public_actions) &&
+    in_array($action, $protected_actions) &&
     !isset($_SESSION['user_id'])
 ) {
     header('Location: index.php?action=login');
@@ -40,6 +56,9 @@ if (
     $controller = new SinhvienController();
 }
 switch ($action) {
+    case 'dashboard':
+        $controller->dashboard();
+        break;
     case 'add':
         $controller->add();
         break;
