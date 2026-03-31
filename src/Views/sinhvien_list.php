@@ -154,6 +154,12 @@ initial-scale=1.0">
 
                 <input type="text" name="phone" placeholder="Số điện thoại" required>
 
+                <input type="text" name="course" placeholder="Khóa học" >
+
+                <input type="text" name="class_name" placeholder="Tên lớp" >
+
+                <input type="text" name="major" placeholder="Ngành học" >
+
                 <label for="avatar">Ảnh đại diện:</label>
                 <input type="file" id="avatar" name="avatar">
 
@@ -168,6 +174,9 @@ initial-scale=1.0">
                         <th>Họ và Tên</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
+                        <th>Khóa học</th>
+                        <th>Tên lớp</th>
+                        <th>Ngành</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -190,11 +199,12 @@ initial-scale=1.0">
                                 </a>
                             </td>
                             <td><?php echo
-                                htmlspecialchars($student['name']); ?></td>
-                            <td><?php echo
                                 htmlspecialchars($student['email']); ?></td>
                             <td><?php echo
                                 htmlspecialchars($student['phone']); ?></td>
+                            <td><?php echo htmlspecialchars($student['course']); ?></td>
+                            <td><?php echo htmlspecialchars($student['class_name']); ?></td>
+                            <td><?php echo htmlspecialchars($student['major']); ?></td>
                             <td>
                                 <a href="index.php?action=edit&id=<?php echo
 

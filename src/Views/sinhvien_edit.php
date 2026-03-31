@@ -75,6 +75,15 @@ initial-scale=1.0">
             <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($student['phone']); ?>"
                 required>
 
+            <label for="course">Khóa học:</label>
+            <input type="text" id="course" name="course" value="<?php echo htmlspecialchars($student['course'] ?? ''); ?>">
+
+            <label for="class_name">Tên lớp:</label>
+            <input type="text" id="class_name" name="class_name" value="<?php echo htmlspecialchars($student['class_name'] ?? ''); ?>">
+
+            <label for="major">Ngành học:</label>
+            <input type="text" id="major" name="major" value="<?php echo htmlspecialchars($student['major'] ?? ''); ?>">
+
             <button type="submit">Lưu thay đổi</button>
         </form>
         <p><a href="index.php">Quay về danh sách</a></p>

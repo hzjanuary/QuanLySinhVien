@@ -32,7 +32,9 @@ if (
 }
 $controller = new SinhvienController();
 
-if (
+if (in_array($action, ['contact', 'submit_contact'])) {
+    $controller = new PageController();
+} elseif (
     in_array($action, [
         'login',
         'register',

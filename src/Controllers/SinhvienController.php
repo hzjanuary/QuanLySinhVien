@@ -112,6 +112,9 @@ class SinhvienController
             $name = $_POST['name'] ?? '';
             $email = $_POST['email'] ?? '';
             $phone = $_POST['phone'] ?? '';
+            $course = $_POST['course'] ?? '';
+            $class_name = $_POST['class_name'] ?? '';
+            $major = $_POST['major'] ?? '';
             $avatar = null;
             // Xử lý upload file
             if (
@@ -141,6 +144,9 @@ class SinhvienController
                     $name,
                     $email,
                     $phone,
+                    $course,
+                    $class_name,
+                    $major,
                     $avatar
                 );
                 FlashMessage::set('student_action', 'Thêm sinh viên thành công!', 'success');
@@ -174,6 +180,9 @@ class SinhvienController
             $name = $_POST['name'] ?? '';
             $email = $_POST['email'] ?? '';
             $phone = $_POST['phone'] ?? '';
+            $course = $_POST['course'] ?? '';
+            $class_name = $_POST['class_name'] ?? '';
+            $major = $_POST['major'] ?? '';
             $oldAvatar = $_POST['old_avatar'] ?? null;
             $avatar = $oldAvatar;
 
@@ -215,6 +224,9 @@ class SinhvienController
                     $name,
                     $email,
                     $phone,
+                    $course,
+                    $class_name,
+                    $major,
                     $avatar
                 );
                 FlashMessage::set('student_action', 'Cập nhật thông tin thành công!', 'success');

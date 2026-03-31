@@ -57,19 +57,25 @@ class SinhvienModel
         ];
     }
     // Thêm sinh viên mới
-    public function addStudent($name, $email, $phone, $avatar)
+    public function addStudent($name, $email, $phone, $course, $class_name, $major, $avatar)
     {
         $stmt = $this->conn->prepare(
-            "INSERT INTO students (name, email, phone, avatar) VALUES (:name, :email, :phone, :avatar)"
+            "INSERT INTO students (name, email, phone, course, class_name, major, avatar) VALUES (:name, :email, :phone, :course, :class_name, :major, :avatar)"
         );
         // Làm sạch dữ liệu
         $name = htmlspecialchars(strip_tags($name));
         $email = htmlspecialchars(strip_tags($email));
         $phone = htmlspecialchars(strip_tags($phone));
+        $course = htmlspecialchars(strip_tags($course));
+        $class_name = htmlspecialchars(strip_tags($class_name));
+        $major = htmlspecialchars(strip_tags($major));
         // Gán dữ liệu vào câu lệnh
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':course', $course);
+        $stmt->bindParam(':class_name', $class_name);
+        $stmt->bindParam(':major', $major);
         $stmt->bindParam(':avatar', $avatar);
         if ($stmt->execute()) {
             return true;
@@ -88,20 +94,26 @@ WHERE id = :id");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     // HÀM THÊM MỚI: Cập nhật thông tin sinh viên (bài 03)
-    public function updateStudent($id, $name, $email, $phone, $avatar)
+    public function updateStudent($id, $name, $email, $phone, $course, $class_name, $major, $avatar)
     {
         $stmt = $this->conn->prepare(
-            "UPDATE students SET name = :name, email = :email, phone = :phone, avatar = :avatar WHERE id = :id"
+            "UPDATE students SET name = :name, email = :email, phone = :phone, course = :course, class_name = :class_name, major = :major, avatar = :avatar WHERE id = :id"
         );
         // Làm sạch dữ liệu
         $name = htmlspecialchars(strip_tags($name));
         $email = htmlspecialchars(strip_tags($email));
         $phone = htmlspecialchars(strip_tags($phone));
+        $course = htmlspecialchars(strip_tags($course));
+        $class_name = htmlspecialchars(strip_tags($class_name));
+        $major = htmlspecialchars(strip_tags($major));
         // Gán dữ liệu vào câu lệnh
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':course', $course);
+        $stmt->bindParam(':class_name', $class_name);
+        $stmt->bindParam(':major', $major);
         $stmt->bindParam(':avatar', $avatar);
         if ($stmt->execute()) {
             return true;
