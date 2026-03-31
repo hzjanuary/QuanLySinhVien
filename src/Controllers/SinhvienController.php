@@ -252,4 +252,22 @@ class SinhvienController
         // Nạp file view và truyền biến $stats ra
         require_once PROJECT_ROOT . '/src/views/dashboard.php';
     }
+    public function detail()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            FlashMessage::set('student_action', 'ID sinh viên không hợp lệ.', 'error');
+            header('Location: index.php');
+            exit();
+        }
+        // Tái sử dụng hàm getStudentById đã có
+        $student = $this->sinhvienModel->getStudentById($id);
+        if (!$student) {
+            FlashMessage::set('student_action', 'Không tìm thấy sinh viên.', 'error');
+            header('Location: index.php');
+            exit();
+        }
+        // Nạp file view chi tiết và truyền dữ liệu sinh viên
+        require_once PROJECT_ROOT . '/src/views/detail.php';
+    }
 }

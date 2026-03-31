@@ -8,22 +8,11 @@ require_once PROJECT_ROOT . '/vendor/autoload.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 use Hzjan\Bai01QuanlySv\Controllers\SinhvienController;
 use Hzjan\Bai01QuanlySv\Controllers\UserController;
+use Hzjan\Bai01QuanlySv\Controllers\PageController;
 // Simple Router
 $action = $_GET['action'] ?? 'index';
-// Danh sách các action không yêu cầu đăng nhập
-// $public_actions = [
-//     'login',
-//     'register',
-//     'do_login',
-//     'do_register'
-// ];
-// if (
-//     !in_array($action, $public_actions) &&
-//     !isset($_SESSION['user_id'])
-// ) {
-//     header('Location: index.php?action=login');
-//     exit();
-// }
+
+$public_actions = ['login', 'register', 'do_login', 'do_register', 'contact', 'submit_contact'];
 
 $protected_actions = [
     'index',
@@ -31,7 +20,8 @@ $protected_actions = [
     'update',
     'delete',
     'add',
-    'dashboard'
+    'dashboard',
+    'detail'
 ];
 if (
     in_array($action, $protected_actions) &&
@@ -87,6 +77,15 @@ switch ($action) {
         break;
     case 'logout':
         $controller->logout();
+        break;
+    case 'contact':
+        $controller->showContactForm();
+        break;
+    case 'submit_contact':
+        $controller->submitContact();
+        break;
+    case 'detail':
+        $controller->detail();
         break;
     case 'index':
     default:
