@@ -94,11 +94,15 @@ class SinhvienController
         }
         $offset = ($currentPage - 1) * $recordsPerPage;
         $keyword = $_GET['keyword'] ?? null;
+        $sortBy = $_GET['sort_by'] ?? 'id';
+        $sortOrder = $_GET['sort_order'] ?? 'DESC';
         // --- GỌI MODEL ---
         $result = $this->sinhvienModel->getStudents(
             $keyword,
             $recordsPerPage,
-            $offset
+            $offset,
+            $sortBy,
+            $sortOrder
         );
         $students = $result['data'];
         $totalRecords = $result['total'];
@@ -112,6 +116,9 @@ class SinhvienController
             $name = $_POST['name'] ?? '';
             $email = $_POST['email'] ?? '';
             $phone = $_POST['phone'] ?? '';
+            $course = $_POST['course'] ?? '';
+            $class_name = $_POST['class_name'] ?? '';
+            $major = $_POST['major'] ?? '';
             $avatar = null;
             // Xử lý upload file
             if (
@@ -141,6 +148,9 @@ class SinhvienController
                     $name,
                     $email,
                     $phone,
+                    $course,
+                    $class_name,
+                    $major,
                     $avatar
                 );
                 FlashMessage::set('student_action', 'Thêm sinh viên thành công!', 'success');
@@ -174,6 +184,9 @@ class SinhvienController
             $name = $_POST['name'] ?? '';
             $email = $_POST['email'] ?? '';
             $phone = $_POST['phone'] ?? '';
+            $course = $_POST['course'] ?? '';
+            $class_name = $_POST['class_name'] ?? '';
+            $major = $_POST['major'] ?? '';
             $oldAvatar = $_POST['old_avatar'] ?? null;
             $avatar = $oldAvatar;
 
@@ -215,6 +228,9 @@ class SinhvienController
                     $name,
                     $email,
                     $phone,
+                    $course,
+                    $class_name,
+                    $major,
                     $avatar
                 );
                 FlashMessage::set('student_action', 'Cập nhật thông tin thành công!', 'success');
@@ -251,5 +267,23 @@ class SinhvienController
         $stats = $this->sinhvienModel->getStatistics();
         // Nạp file view và truyền biến $stats ra
         require_once PROJECT_ROOT . '/src/views/dashboard.php';
+    }
+    public function detail()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            FlashMessage::set('student_action', 'ID sinh viên không hợp lệ.', 'error');
+            header('Location: index.php');
+            exit();
+        }
+        // Tái sử dụng hàm getStudentById đã có
+        $student = $this->sinhvienModel->getStudentById($id);
+        if (!$student) {
+            FlashMessage::set('student_action', 'Không tìm thấy sinh viên.', 'error');
+            header('Location: index.php');
+            exit();
+        }
+        // Nạp file view chi tiết và truyền dữ liệu sinh viên
+        require_once PROJECT_ROOT . '/src/views/detail.php';
     }
 }

@@ -137,6 +137,28 @@ initial-scale=1.0">
                 </h3>
                 <input type="text" name="keyword" placeholder="Tìm theo tên, email, sđt..."
                     value="<?php echo htmlspecialchars($keyword ?? ''); ?>">
+                <label for="sort_by">Sắp xếp theo:</label>
+                <select name="sort_by" id="sort_by">
+                    <?php
+                    $sortOptions = [
+                        'id' => 'ID',
+                        'name' => 'Họ và Tên',
+                        'email' => 'Email',
+                        'phone' => 'Số điện thoại',
+                        'course' => 'Khóa học',
+                        'class_name' => 'Tên lớp',
+                        'major' => 'Ngành'
+                    ];
+                    foreach ($sortOptions as $field => $label):
+                    ?>
+                        <option value="<?php echo $field; ?>" <?php echo (isset($sortBy) && $sortBy === $field) ? 'selected' : ''; ?>><?php echo $label; ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <label for="sort_order">Thứ tự:</label>
+                <select name="sort_order" id="sort_order">
+                    <option value="ASC" <?php echo (isset($sortOrder) && strtoupper($sortOrder) === 'ASC') ? 'selected' : ''; ?>>Tăng dần</option>
+                    <option value="DESC" <?php echo (isset($sortOrder) && strtoupper($sortOrder) === 'DESC') ? 'selected' : ''; ?>>Giảm dần</option>
+                </select>
                 <button type="submit">Tìm kiếm</button>
                 <a href="index.php"
                     style="padding: 8px 12px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 3px;">Reset
@@ -154,6 +176,12 @@ initial-scale=1.0">
 
                 <input type="text" name="phone" placeholder="Số điện thoại" required>
 
+                <input type="text" name="course" placeholder="Khóa học" >
+
+                <input type="text" name="class_name" placeholder="Tên lớp" >
+
+                <input type="text" name="major" placeholder="Ngành học" >
+
                 <label for="avatar">Ảnh đại diện:</label>
                 <input type="file" id="avatar" name="avatar">
 
@@ -168,6 +196,9 @@ initial-scale=1.0">
                         <th>Họ và Tên</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
+                        <th>Khóa học</th>
+                        <th>Tên lớp</th>
+                        <th>Ngành</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -184,12 +215,18 @@ initial-scale=1.0">
                                         style="border-radius: 50%;">
                                 <?php endif; ?>
                             </td>
-                            <td><?php echo
-                                htmlspecialchars($student['name']); ?></td>
+                            <td>
+                                <a href="index.php?action=detail&id=<?php echo $student['id']; ?>">
+                                    <?php echo htmlspecialchars($student['name']); ?>
+                                </a>
+                            </td>
                             <td><?php echo
                                 htmlspecialchars($student['email']); ?></td>
                             <td><?php echo
                                 htmlspecialchars($student['phone']); ?></td>
+                            <td><?php echo htmlspecialchars($student['course']); ?></td>
+                            <td><?php echo htmlspecialchars($student['class_name']); ?></td>
+                            <td><?php echo htmlspecialchars($student['major']); ?></td>
                             <td>
                                 <a href="index.php?action=edit&id=<?php echo
 
@@ -214,7 +251,7 @@ initial-scale=1.0">
             </table>
             <div class="pagination">
                 <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <a href="?keyword=<?php echo urlencode($keyword ?? ''); ?>&page=<?php echo $i; ?>"
+                    <a href="?keyword=<?php echo urlencode($keyword ?? ''); ?>&sort_by=<?php echo urlencode($sortBy ?? 'id'); ?>&sort_order=<?php echo urlencode($sortOrder ?? 'DESC'); ?>&page=<?php echo $i; ?>"
                         class="<?php echo ($i == $currentPage) ? 'active' : ''; ?>">
                         <?php echo $i; ?>
                     </a>
